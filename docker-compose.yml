@@ -2,18 +2,43 @@ version: '3'
 
 services:
   proxy:
-    image: nginx:1.11 # this will use the latest version of 1.11.x
+    image: jwilder/nginx-proxy
+    container_name: proxy
     ports:
       - '80:80' # expose 80 on host and sent to 80 in container
     volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
-  web:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+  downloads:
+    environment:
+      VIRTUAL_HOST: downloads.arednmesh.org
     image: httpd  # this will use httpd:latest
+    container_name: downloads
+    expose:
+      - 80
+    restart: always
     volumes:
-        - ./mnt/data/www:/usr/local/apache2/htdocs:ro
-  mapdata:
-    image: python  # this will use httpd:latest
-  mongodb:
-    image: mongo
-    #volumes:
-    #    - ./mnt/data/db:/var/mongodb/db:rw
+      - ./mnt/data/www/downloads/htdocs:/usr/local/apache2/htdocs:ro
+      - ./mnt/data/www/downloads/httpd.conf:/usr/local/apache2/conf/httpd.conf:ro
+      # - ./mnt/data/www/downloads/dir-index.cgi:/usr/local/apache2/cgi-bin/dir-index.cgi:ro
+  data:
+    environment:
+      VIRTUAL_HOST: data.arednmesh.org
+    image: httpd  # this will use httpd:latest
+    container_name: data
+    expose:
+      - 80
+    restart: always
+    volumes:
+      - ./mnt/data/www/data:/usr/local/apache2/htdocs:ro
+#
+#  mapdata:
+#    image: python  # this will use httpd:latest
+#  mongodb:
+#    image: mongo
+#    volumes:
+#        - ./mnt/data/db:/var/mongodb/db:rw
+
+networks:
+  default:
+      external:
+          name: proxy
