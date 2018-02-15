@@ -9,10 +9,10 @@ services:
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
   downloads:
+    container_name: downloads
     environment:
       VIRTUAL_HOST: downloads.arednmesh.org
     image: httpd  # this will use httpd:latest
-    container_name: downloads
     expose:
       - 80
     restart: always
@@ -21,10 +21,10 @@ services:
       - ./mnt/data/www/downloads/httpd.conf:/usr/local/apache2/conf/httpd.conf:ro
       # - ./mnt/data/www/downloads/dir-index.cgi:/usr/local/apache2/cgi-bin/dir-index.cgi:ro
   data:
+    container_name: data
     environment:
       VIRTUAL_HOST: data.arednmesh.org
     image: httpd  # this will use httpd:latest
-    container_name: data
     expose:
       - 80
     restart: always
@@ -32,11 +32,14 @@ services:
       - ./mnt/data/www/data:/usr/local/apache2/htdocs:ro
 #
 #  mapdata:
+#   container_name: mapdata
 #    image: python  # this will use httpd:latest
-#  mongodb:
-#    image: mongo
-#    volumes:
-#        - ./mnt/data/db:/var/mongodb/db:rw
+
+  mongodb:
+    container_name: mongodb
+    image: mongo
+    volumes:
+      - ./mnt/data/db:/var/mongodb/db:rw
 
 networks:
   default:
