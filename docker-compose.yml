@@ -1,6 +1,7 @@
 version: '3'
 
 services:
+  # -------- NGINX Reverse Proxy -----------
   proxy:
     image: jwilder/nginx-proxy
     container_name: proxy
@@ -8,6 +9,7 @@ services:
       - '80:80' # expose 80 on host and sent to 80 in container
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
+  # -------- APACHE2: downloads server -----------
   downloads:
     container_name: downloads
     environment:
@@ -20,27 +22,37 @@ services:
       - /mnt/data/www/downloads:/usr/local/apache2/htdocs:ro
       - ./config/downloads/httpd.conf:/usr/local/apache2/conf/httpd.conf:ro
       - ./config/downloads/httpd-autoindex.conf:/usr/local/apache2/conf/extra/httpd-autoindex.conf:ro
-#  data:
-#    container_name: data
-#    environment:
-#      VIRTUAL_HOST: data.arednmesh.org
-#    image: httpd  # this will use httpd:latest
-#    expose:
-#      - 80
-#    restart: always
-#    volumes:
-#      - /mnt/data/www/data:/usr/local/apache2/htdocs:ro
-#
-#  mapdata:
-#   container_name: mapdata
-#    image: python  # this will use httpd:latest
-
-#  mongodb:
-#    container_name: mongodb
-#    image: mongo
-#    volumes:
-#      - ./mnt/data/db:/var/mongodb/db:rw
-
+  # -------- APACHE2: usercontent server -----------
+  usercontent:
+    container_name: usercontent
+    environment:
+      VIRTUAL_HOST: usercontent.arednmesh.org
+    image: httpd  # this will use httpd:latest
+    expose:
+      - 80
+    restart: always
+    volumes:
+      - /mnt/data/www/usercontent:/usr/local/apache2/htdocs:ro
+      - ./config/usercontent/httpd.conf:/usr/local/apache2/conf/httpd.conf:ro
+      - ./config/usercontent/httpd-autoindex.conf:/usr/local/apache2/conf/extra/httpd-autoindex.conf:ro
+  # -------- MONGODB: data server -----------
+  mongodb:
+    container_name: mongodb
+    image: mongo
+    volumes:
+      - ./db:/data/db:rw
+  # -------- SYSINFODB: map server -----------
+  sysinfodb:
+    container_name: sysinfodb
+    depends_on:
+      - mongodb
+    environment:
+      VIRTUAL_HOST: data.arednmesh.org
+    image: aredn/sysinfodb  # this will use httpd:latest
+    ports:
+      - '80:8080'
+    restart: always
+# -------- NETWORKS -----------
 networks:
   default:
       external:
