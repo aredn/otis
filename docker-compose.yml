@@ -49,8 +49,8 @@ services:
     environment:
       VIRTUAL_HOST: data.arednmesh.org
     image: arednmesh/sysinfodb  # this will use httpd:latest
-    ports:
-      - '80:8080'
+    expose:
+      - 8080
     restart: always
 # -------- NETWORKS -----------
 networks:
