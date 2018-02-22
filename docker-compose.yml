@@ -18,8 +18,8 @@ services:
     restart: always
     volumes:
       - /mnt/data/www/downloads:/usr/local/apache2/htdocs:ro
-      - ./httpd.conf:/usr/local/apache2/conf/httpd.conf:ro
-      # - ./mnt/data/www/downloads/dir-index.cgi:/usr/local/apache2/cgi-bin/dir-index.cgi:ro
+      - ./config/downloads/httpd.conf:/usr/local/apache2/conf/httpd.conf:ro
+      - ./config/downloads/httpd-autoindex.conf:/usr/local/apache2/conf/extra/httpd-autoindex.conf:ro
 #  data:
 #    container_name: data
 #    environment:
