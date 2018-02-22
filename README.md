@@ -1,1 +1,2 @@
-# dockertest
+# OTIS
+container configuration
