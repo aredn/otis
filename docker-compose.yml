@@ -40,7 +40,7 @@ services:
     container_name: mongodb
     image: mongo
     volumes:
-      - ./db:/data/db:rw
+      - /mnt/data/db:/data/db:rw
   # -------- SYSINFODB: map server -----------
   sysinfodb:
     container_name: sysinfodb
