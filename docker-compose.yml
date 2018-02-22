@@ -48,7 +48,7 @@ services:
       - mongodb
     environment:
       VIRTUAL_HOST: data.arednmesh.org
-    image: aredn/sysinfodb  # this will use httpd:latest
+    image: arednmesh/sysinfodb  # this will use httpd:latest
     ports:
       - '80:8080'
     restart: always
