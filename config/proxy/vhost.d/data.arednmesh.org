@@ -1,0 +1,9 @@
+location /genmap {
+		auth_basic	"AREDN Team Members Login"
+		auth_basic_user_file /mnt/data/www/data/arednteam.htpwd
+}
+
+location /sysinfo/* {
+		auth_basic	"AREDN Team Members Login"
+		auth_basic_user_file /mnt/data/www/data/arednteam.htpwd
+}

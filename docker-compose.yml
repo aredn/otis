@@ -9,6 +9,8 @@ services:
       - '80:80' # expose 80 on host and sent to 80 in container
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./config/proxy/vhost.d:/etc/nginx/conf/vhost.d:ro
+      - ./mnt/data/www/data/arednteam.htpwd:/etc/nginx/arednteam.htpwd:ro
   # -------- APACHE2: downloads server -----------
   downloads:
     container_name: downloads
