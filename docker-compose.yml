@@ -5,8 +5,8 @@ services:
   proxy:
     image: jwilder/nginx-proxy
     container_name: proxy
-    labels: 
-      - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy=true"
+    labels:
+      com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: "true"
     ports:
       - '80:80' # expose 80 on host and sent to 80 in container
     volumes:
