@@ -1,9 +1,9 @@
 location /genmap {
-		auth_basic	"AREDN Team Members Login"
-		auth_basic_user_file /etc/nginx/arednteam.htpwd
+		auth_basic	"AREDN Team Members Login";
+		auth_basic_user_file /etc/nginx/arednteam.htpwd;
 }
 
 location /sysinfo/* {
-		auth_basic	"AREDN Team Members Login"
-		auth_basic_user_file /etc/nginx/arednteam.htpwd
+		auth_basic	"AREDN Team Members Login";
+		auth_basic_user_file /etc/nginx/arednteam.htpwd;
 }
