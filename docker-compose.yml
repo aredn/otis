@@ -2,9 +2,9 @@ version: '3'
 
 services:
   # -------- NGINX Reverse Proxy -----------
-  proxy:
+  nginx-proxy:
     image: jwilder/nginx-proxy
-    container_name: proxy
+    container_name: nginx-proxy
     ports:
       - '80:80' # expose 80 on host and sent to 80 in container
     volumes:
@@ -24,7 +24,7 @@ services:
       # - /mnt/data/nginx/html:/usr/share/nginx/html
       - /mnt/data/www/usercontent:/usr/share/nginx/html:rw
     environment:
-      NGINX_PROXY_CONTAINER: proxy
+      NGINX_PROXY_CONTAINER: nginx-proxy
   # -------- APACHE2: downloads server -----------
   downloads:
     container_name: downloads
