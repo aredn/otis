@@ -12,7 +12,7 @@ services:
       - ./config/proxy/vhost.d:/etc/nginx/vhost.d
       - /mnt/data/www/data/arednteam.htpwd:/etc/nginx/arednteam.htpwd:ro
       - /mnt/data/nginx/certs:/etc/nginx/certs:ro
-      - /mnt/data/nginx/html:/usr/share/nginx/html
+      # - /mnt/data/nginx/html:/usr/share/nginx/html
   # -------- NGINX LetsEncrypt Companion  -----------
   letsencrypt:
     image: jrcs/letsencrypt-nginx-proxy-companion
@@ -21,7 +21,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./config/proxy/vhost.d:/etc/nginx/vhost.d
       - /mnt/data/nginx/certs:/etc/nginx/certs
-      - /mnt/data/nginx/html:/usr/share/nginx/html
+      # - /mnt/data/nginx/html:/usr/share/nginx/html
+      - /mnt/data/www/usercontent:/usr/share/nginx/html
     environment:
       NGINX_PROXY_CONTAINER: proxy
   # -------- APACHE2: downloads server -----------
