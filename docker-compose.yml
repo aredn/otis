@@ -9,8 +9,19 @@ services:
       - '80:80' # expose 80 on host and sent to 80 in container
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
-      - ./config/proxy/vhost.d:/etc/nginx/vhost.d:ro
+      - ./config/proxy/vhost.d:/etc/nginx/vhost.d
       - /mnt/data/www/data/arednteam.htpwd:/etc/nginx/arednteam.htpwd:ro
+      - /mnt/data/nginx/certs:/etc/nginx/certs:ro
+      - /mnt/data/nginx/html:/usr/share/nginx/html
+  # -------- NGINX LetsEncrypt Companion  -----------
+  letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    container_name: letsencrypt
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./config/proxy/vhost.d:/etc/nginx/vhost.d
+      - /mnt/data/nginx/certs:/etc/nginx/certs
+      - /mnt/data/nginx/html:/usr/share/nginx/html
   # -------- APACHE2: downloads server -----------
   downloads:
     container_name: downloads
@@ -29,6 +40,8 @@ services:
     container_name: usercontent
     environment:
       VIRTUAL_HOST: usercontent.arednmesh.org
+      LETSENCRYPT_HOST: usercontent.arednmesh.org
+      LETSENCRYPT_EMAIL: dman776@gmail.com
     image: httpd  # this will use httpd:latest
     expose:
       - 80
