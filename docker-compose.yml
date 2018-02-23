@@ -7,6 +7,7 @@ services:
     container_name: nginx-proxy
     ports:
       - '80:80' # expose 80 on host and sent to 80 in container
+      - '443:443'
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./config/proxy/vhost.d:/etc/nginx/vhost.d
@@ -48,6 +49,7 @@ services:
     image: httpd  # this will use httpd:latest
     expose:
       - 80
+      - 443
     restart: always
     volumes:
       - /mnt/data/www/usercontent:/usr/local/apache2/htdocs:ro
