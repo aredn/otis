@@ -22,7 +22,7 @@ services:
       - ./config/proxy/vhost.d:/etc/nginx/vhost.d
       - /mnt/data/nginx/certs:/etc/nginx/certs
       # - /mnt/data/nginx/html:/usr/share/nginx/html
-      - /mnt/data/www/usercontent:/usr/share/nginx/html
+      - /mnt/data/www/usercontent:/usr/share/nginx/html:rw
     environment:
       NGINX_PROXY_CONTAINER: proxy
   # -------- APACHE2: downloads server -----------
