@@ -69,6 +69,8 @@ services:
       - mongodb
     environment:
       VIRTUAL_HOST: data.arednmesh.org
+      LETSENCRYPT_HOST: data.arednmesh.org
+      LETSENCRYPT_EMAIL: dman776@gmail.com
     image: arednmesh/sysinfodb  # this will use httpd:latest
     expose:
       - 8080
