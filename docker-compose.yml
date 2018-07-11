@@ -8,6 +8,9 @@ services:
     ports:
       - '80:80' # expose 80 on host and sent to 80 in container
       - '443:443'
+    environment:
+      HSTS: "off"
+      HTTPS_METHOD: "noredirect"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./config/proxy/vhost.d:/etc/nginx/vhost.d
@@ -32,7 +35,9 @@ services:
     container_name: downloads
     environment:
       VIRTUAL_HOST: downloads.arednmesh.org
-    image: httpd  # this will use httpd:latest
+#      LETSENCRYPT_HOST: downloads.arednmesh.org
+#      LETSENCRYPT_EMAIL: dman776@gmail.com
+    image: arednmesh/httpdmd  # this will use httpd:latest
     expose:
       - 80
     restart: always
@@ -45,8 +50,8 @@ services:
     container_name: usercontent
     environment:
       VIRTUAL_HOST: usercontent.arednmesh.org
-      LETSENCRYPT_HOST: usercontent.arednmesh.org
-      LETSENCRYPT_EMAIL: dman776@gmail.com
+#      LETSENCRYPT_HOST: usercontent.arednmesh.org
+#      LETSENCRYPT_EMAIL: dman776@gmail.com
     image: httpd  # this will use httpd:latest
     expose:
        - 80
@@ -69,9 +74,9 @@ services:
       - mongodb
     environment:
       VIRTUAL_HOST: data.arednmesh.org
-      LETSENCRYPT_HOST: data.arednmesh.org
-      LETSENCRYPT_EMAIL: dman776@gmail.com
-    image: arednmesh/sysinfodb  # this will use httpd:latest
+ #     LETSENCRYPT_HOST: data.arednmesh.org
+ #     LETSENCRYPT_EMAIL: dman776@gmail.com
+    image: arednmesh/sysinfodb  # this will use :latest
     expose:
       - 8080
     restart: always
